@@ -1,3 +1,5 @@
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential
@@ -13,10 +15,11 @@ import string
 from nltk.corpus import stopwords
 from keras.preprocessing.sequence import pad_sequences
 
-GLOVE_PATH = "../../Data/Embeddings/glove.6B.100d.txt")
+GLOVE_PATH = "../../../Data/Embeddings/glove.6B.100d.txt"
+SNOPES_PATH = "../input/Snopes/snopes.tsv"
 
 # Get embeddings from GloVe
-def get_emb_idx(file_path='glove.6B.100d.txt'):
+def get_emb_idx(file_path=GLOVE_PATH):
     embeddings_index = dict()
     f = open(file_path)
     for line in f:
@@ -124,7 +127,6 @@ def read_tsv_file(file_path='snopes.tsv'):
               }
     with open(file_path[:-4] + '.npy', 'wb') as f:
         pickle.dump(record, f)
-
 
 def yield_data(record):
     voc = 50000

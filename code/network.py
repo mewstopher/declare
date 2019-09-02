@@ -13,6 +13,8 @@ from data_preprocessing import yield_data, get_emb_idx, create_emb_matrix
 from keras.backend import mean, expand_dims
 import pickle
 
+GLOVE_PATH = "../../../Data/Embeddings/glove.6B.100d.txt"
+
 batch_size = 1
 ip_dim_art = 100
 ip_dim_clm = 200
@@ -25,7 +27,7 @@ vocabulary_size = 50000
 file_path='snopes.npy'
 with open(file_path, 'rb') as f:
     record = pickle.load(f)
-emb_idx = get_emb_idx('glove.6B.100d.txt')
+emb_idx = get_emb_idx(GLOVE_PATH)
 word_emb = create_emb_matrix(vocabulary_size, emb_idx, record['claim_text'] + record['evidence'])# + record['evidence_source'])
 
 
