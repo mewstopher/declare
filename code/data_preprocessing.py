@@ -16,7 +16,7 @@ from nltk.corpus import stopwords
 from keras.preprocessing.sequence import pad_sequences
 
 GLOVE_PATH = "../../../Data/Embeddings/glove.6B.100d.txt"
-SNOPES_PATH = "../input/Snopes/snopes.tsv"
+SNOPES_PATH = "../input/snopes.tsv"
 
 # Get embeddings from GloVe
 def get_emb_idx(file_path=GLOVE_PATH):
@@ -101,14 +101,14 @@ def clean_text(text):
     text = " ".join(stemmed_words)
     return text
 
-def read_tsv_file(file_path='snopes.tsv'):
+def read_tsv_file(file_path=SNOPES_PATH):
     cred_label = []
     claim_id = []
     claim_text = []
     claim_source = []  # you need to add this depending on the dataset
     evidence = []
     evidence_source = []
-    with open(file_path, 'rb') as f:
+    with open(file_path, 'rt') as f:
         tsv_input = csv.reader(f, delimiter='\t')
         for row in tsv_input:
             cred_label.append(row[0])

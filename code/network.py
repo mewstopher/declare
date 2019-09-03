@@ -1,3 +1,5 @@
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 import numpy as np
 from keras.models import Sequential
 from keras.layers import Bidirectional
@@ -24,7 +26,7 @@ op_1 = 32
 op_2 = 1
 vocabulary_size = 50000
 
-file_path='snopes.npy'
+file_path='../input/snopes.npy'
 with open(file_path, 'rb') as f:
     record = pickle.load(f)
 emb_idx = get_emb_idx(GLOVE_PATH)
@@ -36,6 +38,7 @@ art_wrd = Input(shape=(100,))
 clm_wrd = Input(shape=(100,))
 clm_wrd_emb = Embedding(vocabulary_size, 100, input_length=100, weights=[word_emb], trainable=False)(clm_wrd)
 mean_clm_wrd_emb = RepeatVector(100)(mean(clm_wrd_emb, axis=-1))
+
 art_wrd_emb = Embedding(vocabulary_size, 100, input_length=100, weights=[word_emb], trainable=False)(art_wrd)
 ip_to_dense = Concatenate(axis=-1)([mean_clm_wrd_emb, art_wrd_emb])
 attn_weights = Dense(128, activation='tanh')(clm_wrd_emb)
